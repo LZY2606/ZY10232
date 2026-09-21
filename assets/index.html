@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>孢粉演替台</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header>
+  <h1>孢粉演替台</h1>
+  <p class="sub">湖芯孢粉：数量 · 比例 · 方差稳定变换切换；生态带边界多候选；零/缺失区分；年代多峰不平均。</p>
+  <div id="site-meta" class="meta"></div>
+</header>
+
+<main>
+  <section class="panel" id="control-panel">
+    <h2>分带设置（每次分带固定词表与年代模型版本）</h2>
+    <div class="grid">
+      <label>分母（进入分母的分类组）
+        <select id="group-select"></select>
+      </label>
+      <label>自定义分母分类单元（留空用上面的组，逗号分隔）
+        <input id="denominator-input" placeholder="例如 Betula,Quercus,Artemisia" />
+      </label>
+      <label>排除低计数：分母总计数阈值 ≥
+        <input id="min-total" type="number" min="0" value="30" />
+      </label>
+      <label>相邻样本组合块大小 k
+        <input id="block-size" type="number" min="1" max="5" value="1" />
+      </label>
+      <label>年代模型版本
+        <select id="age-model"></select>
+      </label>
+      <label>视图口径
+        <select id="transform">
+          <option value="proportion">比例（相对百分比）</option>
+          <option value="angular">方差稳定（arcsin √p）</option>
+          <option value="counts">数量（原计数）</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint">注：零总数样本不生成全零百分比，始终从组成分析排除；混层样本不能作精确边界，只给“可能支持方向”。</p>
+    <div class="actions">
+      <button id="run-btn" class="primary">运行分带 / 更新口径</button>
+      <button id="export-all-btn">导出全部运行记录</button>
+      <button id="reset-runs-btn">清空运行</button>
+      <button id="reset-all-btn">清空数据库并重导固定柱样</button>
+      <label class="file-btn">导入运行记录重放复核
+        <input type="file" id="replay-file" accept="application/json,.json" hidden />
+      </label>
+    </div>
+    <div id="run-status" class="status"></div>
+  </section>
+
+  <section class="panel" id="result-panel" hidden>
+    <h2>本次分带</h2>
+    <div id="run-info" class="meta"></div>
+
+    <h3>边界候选（保留多个，按当前口径支持度排序）</h3>
+    <div id="boundaries"></div>
+
+    <h3>组成曲线（深度纵轴，浅→深）</h3>
+    <div id="chart"></div>
+
+    <h3>原计数与样本表</h3>
+    <div class="table-wrap"><table id="sample-table"></table></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel">
+    <h2>历史运行记录</h2>
+    <div class="table-wrap"><table id="runs-table"></table></div>
+    <div id="replay-report"></div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

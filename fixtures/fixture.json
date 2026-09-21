@@ -1,0 +1,337 @@
+{
+  "site": "LAKE-A",
+  "description": "湖芯 LAKE-A 教学/验收固定柱样：含低总计数层(S7)、零总数层(S4)、混层区(S5,S6)、缺失计数(Pteridium/Picea)与两套年代模型(am_2019, am_2024)。深度自浅至深。",
+  "age_unit": "cal BP",
+  "taxa": [
+    {
+      "code": "Betula",
+      "name_cn": "桦木属",
+      "kind": "tree"
+    },
+    {
+      "code": "Alnus",
+      "name_cn": "桤木属",
+      "kind": "tree"
+    },
+    {
+      "code": "Picea",
+      "name_cn": "云杉属",
+      "kind": "tree"
+    },
+    {
+      "code": "Quercus",
+      "name_cn": "栎属",
+      "kind": "tree"
+    },
+    {
+      "code": "Artemisia",
+      "name_cn": "蒿属",
+      "kind": "herb"
+    },
+    {
+      "code": "Poaceae",
+      "name_cn": "禾本科",
+      "kind": "herb"
+    },
+    {
+      "code": "Pteridium",
+      "name_cn": "蕨属孢子",
+      "kind": "spore"
+    }
+  ],
+  "groups": {
+    "all": [
+      "Betula",
+      "Alnus",
+      "Picea",
+      "Quercus",
+      "Artemisia",
+      "Poaceae",
+      "Pteridium"
+    ],
+    "pollen_only": [
+      "Betula",
+      "Alnus",
+      "Picea",
+      "Quercus",
+      "Artemisia",
+      "Poaceae"
+    ],
+    "trees": [
+      "Betula",
+      "Alnus",
+      "Picea",
+      "Quercus"
+    ],
+    "upland_pollen": [
+      "Betula",
+      "Alnus",
+      "Picea",
+      "Quercus",
+      "Artemisia",
+      "Poaceae"
+    ],
+    "herbs": [
+      "Artemisia",
+      "Poaceae"
+    ]
+  },
+  "samples": [
+    {
+      "code": "S1",
+      "depth_cm": 0.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          90,
+          140
+        ],
+        "am_2024": [
+          80,
+          140
+        ]
+      }
+    },
+    {
+      "code": "S2",
+      "depth_cm": 2.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          130,
+          230
+        ],
+        "am_2024": [
+          130,
+          230
+        ]
+      }
+    },
+    {
+      "code": "S3",
+      "depth_cm": 4.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          240,
+          330
+        ],
+        "am_2024": [
+          250,
+          330
+        ]
+      }
+    },
+    {
+      "code": "S4",
+      "depth_cm": 6.5,
+      "mixed": false,
+      "note": "零总数层：全部计数缺失或为零，不生成全零百分比",
+      "ages": {
+        "am_2019": [
+          360,
+          450
+        ],
+        "am_2024": [
+          360,
+          440
+        ]
+      }
+    },
+    {
+      "code": "S5",
+      "depth_cm": 8.5,
+      "mixed": true,
+      "note": "混层区：不能作精确边界",
+      "ages": {
+        "am_2019": [
+          440,
+          560
+        ],
+        "am_2024": [
+          420,
+          540
+        ]
+      }
+    },
+    {
+      "code": "S6",
+      "depth_cm": 10.5,
+      "mixed": true,
+      "note": "混层区：不能作精确边界",
+      "ages": {
+        "am_2019": [
+          600,
+          700
+        ],
+        "am_2024": [
+          580,
+          680
+        ]
+      }
+    },
+    {
+      "code": "S7",
+      "depth_cm": 12.5,
+      "mixed": false,
+      "note": "低总计数层(denom=26)；Picea 计数缺失",
+      "ages": {
+        "am_2019": [
+          690,
+          850
+        ],
+        "am_2024": [
+          800,
+          920
+        ]
+      }
+    },
+    {
+      "code": "S8",
+      "depth_cm": 14.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          880,
+          980
+        ],
+        "am_2024": [
+          900,
+          1020
+        ]
+      }
+    },
+    {
+      "code": "S9",
+      "depth_cm": 16.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          970,
+          1090
+        ],
+        "am_2024": [
+          1100,
+          1220
+        ]
+      }
+    },
+    {
+      "code": "S10",
+      "depth_cm": 18.5,
+      "mixed": false,
+      "ages": {
+        "am_2019": [
+          1120,
+          1210
+        ],
+        "am_2024": [
+          1280,
+          1380
+        ]
+      }
+    }
+  ],
+  "counts": [
+    {
+      "sample": "S1",
+      "Betula": 15,
+      "Alnus": 20,
+      "Picea": 10,
+      "Quercus": 90,
+      "Artemisia": 20,
+      "Poaceae": 25,
+      "Pteridium": 15
+    },
+    {
+      "sample": "S2",
+      "Betula": 8,
+      "Alnus": 6,
+      "Picea": 2,
+      "Quercus": 6,
+      "Artemisia": 65,
+      "Poaceae": 75,
+      "Pteridium": 20
+    },
+    {
+      "sample": "S3",
+      "Betula": 10,
+      "Alnus": 5,
+      "Picea": 3,
+      "Quercus": 8,
+      "Artemisia": 70,
+      "Poaceae": 80,
+      "Pteridium": 25
+    },
+    {
+      "sample": "S4",
+      "Betula": 0,
+      "Alnus": 0,
+      "Picea": null,
+      "Quercus": null,
+      "Artemisia": null,
+      "Poaceae": null,
+      "Pteridium": null
+    },
+    {
+      "sample": "S5",
+      "Betula": 35,
+      "Alnus": 25,
+      "Picea": 8,
+      "Quercus": 20,
+      "Artemisia": 35,
+      "Poaceae": 40,
+      "Pteridium": 10
+    },
+    {
+      "sample": "S6",
+      "Betula": 30,
+      "Alnus": 20,
+      "Picea": 5,
+      "Quercus": 25,
+      "Artemisia": 40,
+      "Poaceae": 45,
+      "Pteridium": 12
+    },
+    {
+      "sample": "S7",
+      "Betula": 6,
+      "Alnus": 4,
+      "Picea": null,
+      "Quercus": 3,
+      "Artemisia": 5,
+      "Poaceae": 6,
+      "Pteridium": 2
+    },
+    {
+      "sample": "S8",
+      "Betula": 70,
+      "Alnus": 40,
+      "Picea": 20,
+      "Quercus": 30,
+      "Artemisia": 25,
+      "Poaceae": 30,
+      "Pteridium": 10
+    },
+    {
+      "sample": "S9",
+      "Betula": 110,
+      "Alnus": 60,
+      "Picea": 35,
+      "Quercus": 8,
+      "Artemisia": 10,
+      "Poaceae": 15,
+      "Pteridium": 3
+    },
+    {
+      "sample": "S10",
+      "Betula": 120,
+      "Alnus": 70,
+      "Picea": 40,
+      "Quercus": 10,
+      "Artemisia": 8,
+      "Poaceae": 12,
+      "Pteridium": 2
+    }
+  ]
+}
