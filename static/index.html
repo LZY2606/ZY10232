@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>孢粉演替台</title>
+<style>
+  :root{
+    --bg:#f4f6f2; --panel:#ffffff; --ink:#1f2a24; --muted:#5c6b61;
+    --line:#d7dfd6; --accent:#2f7d4f; --accent2:#8a5a2b;
+    --warn:#b45309; --bad:#b3261e; --good:#1e7a46; --chip:#eef4ec;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+       background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+  header{background:linear-gradient(120deg,#234f35,#2f7d4f);color:#fff;padding:16px 22px}
+  header h1{margin:0;font-size:22px;letter-spacing:2px}
+  header p{margin:4px 0 0;opacity:.88;font-size:13px}
+  .wrap{display:grid;grid-template-columns:300px 1fr;gap:16px;padding:16px 22px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .panel h2{font-size:15px;margin:0 0 10px;border-left:4px solid var(--accent);padding-left:8px}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  select,input,button{font:inherit;width:100%;padding:6px 8px;border:1px solid var(--line);
+       border-radius:6px;background:#fff;color:var(--ink)}
+  button{cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent);margin-top:10px}
+  button.secondary{background:#fff;color:var(--accent)}
+  button.warn{background:var(--warn);border-color:var(--warn)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--chip);
+        cursor:pointer;user-select:none;font-size:12px}
+  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .seg button{margin:0;border:0;border-radius:0;background:#fff;color:var(--ink)}
+  .seg button.on{background:var(--accent);color:#fff}
+  .muted{color:var(--muted);font-size:12px}
+  table{border-collapse:collapse;width:100%;font-size:12px}
+  th,td{border:1px solid var(--line);padding:3px 6px;text-align:right;white-space:nowrap}
+  th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+  thead th{background:#eef4ec;position:sticky;top:0}
+  td.miss{color:#9aa59d;font-style:italic;background:#fafafa}
+  td.zero{color:var(--bad);font-weight:600}
+  tr.excluded td{opacity:.55;background:#faf6f2}
+  .tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;margin-left:4px}
+  .tag.strong{background:#fde8e6;color:var(--bad)}
+  .tag.medium{background:#fdf0d9;color:var(--warn)}
+  .tag.weak{background:#eef2ee;color:var(--muted)}
+  .tag.imp{background:#f3e8ff;color:#6b21a8}
+  .tag.multi{background:#ffe8ef;color:#9d174d}
+  .tag.gap{background:#e7f0fb;color:#1d4e89}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .scroll{overflow:auto;max-height:430px;border:1px solid var(--line);border-radius:8px}
+  .run{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0;cursor:pointer}
+  .run.on{border-color:var(--accent);background:#f1f8f3}
+  .curve-wrap{overflow-x:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+  .legend span{font-size:11px;display:inline-flex;align-items:center;gap:4px}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+  .bcard{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:10px 0}
+  .bcard.imp{background:#fbf7ff;border-color:#e3d2f5}
+  .peaks{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .peak{background:#eef4ec;border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px}
+  .peak.multi{background:#ffe8ef;border-color:#f3b6cc}
+  .toast{position:fixed;right:18px;bottom:18px;background:#22352a;color:#fff;padding:10px 14px;
+         border-radius:8px;opacity:0;transition:opacity .25s;max-width:380px}
+  .toast.show{opacity:1}
+  .row{display:flex;gap:8px}
+  .row>*{flex:1}
+  .small{font-size:11px}
+  .delta-up{color:var(--good)}
+  .delta-down{color:var(--accent2)}
+</style>
+</head>
+<body>
+<header>
+  <h1>孢粉演替台</h1>
+  <p>湖芯孢粉计数 · 数量 / 相对比例 / Hellinger 方差稳定变换 · 多候选生态带边界与年代多峰解释</p>
+</header>
+
+<div class="wrap">
+  <div>
+    <div class="panel">
+      <h2>① 分带设置（固定词表与年代模型）</h2>
+
+      <label>进入分母（孢粉总和）的生态组</label>
+      <div class="chips" id="groupChips"></div>
+      <div class="muted small" id="denomHint"></div>
+
+      <label>排除低计数样本：最小分母总和</label>
+      <input id="minSum" type="number" min="0" step="10" value="50" />
+      <p class="muted small">总计数为 0 的样本恒被排除，且不生成全零百分比。</p>
+
+      <label>相邻样本组合大小 k（边界候选在组合之间产生）</label>
+      <input id="blockSize" type="number" min="1" max="6" value="1" />
+
+      <label>年代模型版本（每次分带固定）</label>
+      <select id="ageModel"></select>
+
+      <label>本次分带备注（可选）</label>
+      <input id="runLabel" placeholder="例如：仅乔木分母复核林线" />
+
+      <button id="runBtn">执行分带并生成边界候选</button>
+      <p class="muted small">词表指纹：<span id="vocabFp">…</span></p>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h2>② 运行记录</h2>
+      <div id="runList"></div>
+      <div class="row">
+        <button class="secondary" id="exportBtn">导出运行记录(JSON)</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="secondary" id="importBtn">清空并导入复核…</button>
+        <button class="warn" id="resetBtn">清空数据库→重导 fixture</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json,.json" style="display:none" />
+      <p class="muted small" id="ioMsg"></p>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <h2>③ 当前结果</h2>
+      <div id="runMeta" class="muted">尚未选择运行。</div>
+      <div style="margin-top:8px">
+        <label style="display:inline">视图变换：</label>
+        <div class="seg" style="display:inline-flex;width:340px;vertical-align:middle">
+          <button data-t="counts" class="on">数量（原计数）</button>
+          <button data-t="proportion">相对比例</button>
+          <button data-t="hellinger">√p 方差稳定</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h2>原计数与组成（按深度，深＝老）</h2>
+      <div class="legend" id="legend"></div>
+      <div class="grid2">
+        <div>
+          <div class="muted small">组成曲线</div>
+          <div class="curve-wrap" id="curves"></div>
+        </div>
+        <div>
+          <div class="muted small">计数表（<span class="miss">斜体=缺失</span>，<span class="zero">红=结构零</span>，暗行=被排除）</div>
+          <div class="scroll" id="countTable"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h2>生态带边界候选（组间差异 · 年代区间 · 支持度）</h2>
+      <div id="boundaryList"><p class="muted">尚无边界候选。</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

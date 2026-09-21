@@ -1,0 +1,24 @@
+[package]
+name = "pollen-succession-stage"
+version = "0.1.0"
+edition = "2021"
+description = "孢粉演替台：湖芯孢粉计数的数量/比例/方差稳定变换分带与多峰年代边界支持度"
+
+[lib]
+name = "pollen_stage"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pollen-stage"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.7.9"
+tokio = { version = "1.40", features = ["rt-multi-thread", "macros", "net", "signal"] }
+rusqlite = { version = "0.31.0", features = ["bundled"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }
+http-body-util = "0.1"
